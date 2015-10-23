@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{bookname}}</title>
+	<meta content="width=device-width" name="viewport">
+</head>	
+<body bgcolor="#99CCCC">
+<script type="text/javascript">
+<!--
+function clearp()
+{
+	var patterntext;
+	patterntext = document.getElementById('pattern');
+	patterntext.value='';
+	patterntext.focus()
+}
+-->
+</script>
+
+	<center>《{{bookname}}》</center>
+    正则表达式:<input type="button" value="清空" onclick="clearp()" /><br>
+	<form action="/" method="post" enctype="multipart/form-data">
+        <input type="text" name="pattern" id="pattern"></input><br>
+        Flags:<br>
+        <input type="text" name="flags" value="S "></input><br>
+        搜索数量:<br>
+        <input type="text" name="size"></input><br>
+		<center><button name="name" value="search">搜索</button></center>
+		验证码:<br>
+		<input type="text" name="code"></input><br>
+	</form>
+</body>
+
+</html>
