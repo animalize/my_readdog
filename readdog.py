@@ -2,7 +2,8 @@
 
 import random
 
-import regex as re
+import regex
+regex.DEFAULT_VERSION = regex.VERSION1
 
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
@@ -36,19 +37,19 @@ def process_flags(string):
     for f in flags:
 
         if is_this(f, 'ASCII', 'A'):
-            ret |= re.ASCII
+            ret |= regex.ASCII
         elif 'DEBUG' == f:
-            ret |= re.DEBUG
+            ret |= regex.DEBUG
         elif is_this(f, 'IGNORECASE', 'I'):
-            ret |= re.IGNORECASE
+            ret |= regex.IGNORECASE
         elif is_this(f, 'LOCALE', 'L'):
-            ret |= re.LOCALE
+            ret |= regex.LOCALE
         elif is_this(f, 'MULTILINE', 'M'):
-            ret |= re.MULTILINE
+            ret |= regex.MULTILINE
         elif is_this(f, 'DOTALL', 'S'):
-            ret |= re.DOTALL
+            ret |= regex.DOTALL
         elif is_this(f, 'VERBOSE', 'X'):
-            ret |= re.VERBOSE
+            ret |= regex.VERBOSE
         else:
             print('错误!未知的正则模式:', flag)
 
@@ -75,7 +76,7 @@ class ReaddogHander(RequestHandler):
             size = -1
 
         # 正则
-        r = re.compile(pattern, flags)
+        r = regex.compile(pattern, flags)
         match_iter = r.finditer(book_text)
 
         ret = []
