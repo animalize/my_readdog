@@ -23,34 +23,71 @@ with open(file_name, encoding=file_encoding) as f:
     print('读入%s个字符' % format(len(book_text), ','))
 
 
+flag_map = {
+    'ASCII': regex.ASCII,
+    'A': regex.ASCII,
+
+    'BESTMATCH': regex.BESTMATCH,
+    'B': regex.BESTMATCH,
+
+    'DEBUG': regex.DEBUG,
+    'D': regex.DEBUG,
+
+    'ENHANCEMATCH': regex.ENHANCEMATCH,
+    'E': regex.ENHANCEMATCH,
+
+    'FULLCASE': regex.FULLCASE,
+    'F': regex.FULLCASE,
+
+    'IGNORECASE': regex.IGNORECASE,
+    'I': regex.IGNORECASE,
+
+    'LOCALE': regex.LOCALE,
+    'L': regex.LOCALE,
+
+    'MULTILINE': regex.MULTILINE,
+    'M': regex.MULTILINE,
+
+    'POSIX': regex.POSIX,
+    'P': regex.POSIX,
+
+    'REVERSE': regex.REVERSE,
+    'R': regex.REVERSE,
+
+    'DOTALL': regex.DOTALL,
+    'S': regex.DOTALL,
+
+    'UNICODE': regex.UNICODE,
+    'U': regex.UNICODE,
+
+    'VERSION0': regex.VERSION0,
+    'V0': regex.VERSION0,
+
+    'VERSION1': regex.VERSION1,
+    'V1': regex.VERSION1,
+
+    'WORD': regex.WORD,
+    'W': regex.WORD,
+
+    'VERBOSE': regex.VERBOSE,
+    'X': regex.VERBOSE,
+
+    'TEMPLATE': regex.TEMPLATE,
+    'T': regex.TEMPLATE,
+}
+
 # 解析flags
+
+
 def process_flags(string):
-    def is_this(upper_flag, s1, s2):
-        if upper_flag == s1 or upper_flag == s2:
-            return True
-        else:
-            return False
 
     flags = string.strip().upper().split()
 
     ret = 0
     for f in flags:
-
-        if is_this(f, 'ASCII', 'A'):
-            ret |= regex.ASCII
-        elif 'DEBUG' == f:
-            ret |= regex.DEBUG
-        elif is_this(f, 'IGNORECASE', 'I'):
-            ret |= regex.IGNORECASE
-        elif is_this(f, 'LOCALE', 'L'):
-            ret |= regex.LOCALE
-        elif is_this(f, 'MULTILINE', 'M'):
-            ret |= regex.MULTILINE
-        elif is_this(f, 'DOTALL', 'S'):
-            ret |= regex.DOTALL
-        elif is_this(f, 'VERBOSE', 'X'):
-            ret |= regex.VERBOSE
-        else:
+        try:
+            ret |= flag_map[f]
+        except:
             print('错误!未知的正则模式:', flag)
 
     return ret
@@ -66,7 +103,7 @@ class ReaddogHander(RequestHandler):
         if self.get_body_argument('code') != verfy_code:
             self.render('root.html', bookname=book_name)
             return
-        
+
         # 提交的信息
         pattern = self.get_body_argument('pattern')
         flags = process_flags(self.get_body_argument('flags'))
@@ -114,6 +151,8 @@ class ReaddogHander(RequestHandler):
                     result=html)
 
 # web部分
+
+
 class ReaddogApplication(Application):
 
     def __init__(self):
