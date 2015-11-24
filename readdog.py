@@ -56,6 +56,9 @@ flag_map = {
 
     'DOTALL': regex.DOTALL,
     'S': regex.DOTALL,
+    
+    'TEMPLATE': regex.TEMPLATE,
+    'T': regex.TEMPLATE,
 
     'UNICODE': regex.UNICODE,
     'U': regex.UNICODE,
@@ -71,9 +74,6 @@ flag_map = {
 
     'VERBOSE': regex.VERBOSE,
     'X': regex.VERBOSE,
-
-    'TEMPLATE': regex.TEMPLATE,
-    'T': regex.TEMPLATE,
 }
 
 # 解析flags
