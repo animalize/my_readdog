@@ -88,7 +88,7 @@ def process_flags(string):
         try:
             ret |= flag_map[f]
         except:
-            print('错误!未知的正则模式:', flag)
+            print('错误!未知的正则模式:', f)
 
     return ret
 
