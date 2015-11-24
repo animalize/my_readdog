@@ -84,11 +84,11 @@ def process_flags(string):
     flags = string.strip().upper().split()
 
     ret = 0
-    for f in flags:
+    for flag in flags:
         try:
-            ret |= flag_map[f]
+            ret |= flag_map[flag.upper()]
         except:
-            print('错误!未知的正则模式:', f)
+            print('错误!未知的正则模式:', flag)
 
     return ret
 
