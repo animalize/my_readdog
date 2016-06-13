@@ -1,6 +1,8 @@
 # coding=utf-8
 
 import random
+import os
+import sys
 
 import regex
 regex.DEFAULT_VERSION = regex.VERSION1
@@ -11,14 +13,18 @@ from tornado.web import RequestHandler, Application
 
 # 全局变量
 # file_name应位于readdog.py相同目录下
-book_name = '静静的顿河'
-verfy_code = 'python3'
+book_name = '红楼梦'
+verfy_code = 'h'
 file_name = 'a.txt'
 file_encoding = 'gb18030'
 
 # 读入txt文件
 book_text = ''
-with open(file_name, encoding=file_encoding) as f:
+
+root_path = os.path.dirname(os.path.abspath(__file__))
+txt_path = os.path.join(root_path, file_name)
+
+with open(txt_path, encoding=file_encoding) as f:
     book_text = f.read()
     print('读入%s个字符' % format(len(book_text), ','))
 
@@ -99,10 +105,10 @@ class ReaddogHander(RequestHandler):
         self.render('root.html', bookname=book_name)
 
     def post(self):
-        # 验证码
-        if self.get_body_argument('code') != verfy_code:
-            self.render('root.html', bookname=book_name)
-            return
+#         # 验证码
+#         if self.get_body_argument('code') != verfy_code:
+#             self.render('root.html', bookname=book_name)
+#             return
 
         # 提交的信息
         pattern = self.get_body_argument('pattern')
@@ -160,13 +166,18 @@ class ReaddogApplication(Application):
             (r'/', ReaddogHander)
         ]
         settings = {
-            'template_path': 'templates',
+            'template_path': os.path.join(root_path, 'templates'),
         }
         Application.__init__(self, handlers, **settings)
 
 app = ReaddogApplication()
 
 if __name__ == '__main__':
+    try:
+        port = int(sys.argv[1])
+    except:
+        port = 9999
+    
     http_server = HTTPServer(app)
-    http_server.listen(9999)
+    http_server.listen(port)
     IOLoop.instance().start()
