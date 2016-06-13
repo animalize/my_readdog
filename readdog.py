@@ -145,6 +145,9 @@ class ReaddogHander(RequestHandler):
 
             count += 1
             ret.append('【' + str(count) + '】' + section)
+        else:
+            s = '<font color="green">忽略%d条以后的结果...</font>' % size
+            ret.append(s)
 
         html = '<hr>'.join(ret)
 
